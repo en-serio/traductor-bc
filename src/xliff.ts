@@ -20,6 +20,7 @@ export async function parseXliffToJSON(
     const id = unit.getAttribute("id") ?? "";
     const source = unit.getElementsByTagName("source")[0]?.textContent ?? "";
     const target = unit.getElementsByTagName("target")[0]?.textContent ?? "";
+    const translate = unit.getAttribute("translate") ?? "yes";
 
     const notes = Array.from(unit.getElementsByTagName("note")).map((note) => ({
       from: note.getAttribute("from") ?? "",
@@ -30,7 +31,7 @@ export async function parseXliffToJSON(
 
     // xliffUnits.appendChild(await createXliffUnit(id, source));
 
-    result.push({ id, source, target, notes });
+    result.push({ id, source, target, notes, translate: translate === "yes" });
   }
 
   return result;
@@ -146,36 +147,65 @@ async function createXliffUnit(
 ): Promise<HTMLTableRowElement> {
   let target: string = "";
   let translator = getTranslator();
-  if (keepOld && OldTarget !== "No implementado") {
-    target = OldTarget;
-  } else {
-    if (!translator) {
-      indicatorError("Traductor no cargado todavía. Pulsa 'Cargar traductor'.");
+  if (xliffUnit.translate) {
+    if (keepOld && OldTarget !== "No implementado") {
+      target = OldTarget;
+    } else {
+      if (!translator) {
+        indicatorError("Translator not loaded yet. Click 'Load Translator'.");
+      }
+      target = await translator.translate(xliffUnit.source);
     }
-    target = await translator.translate(xliffUnit.source);
+  } else {
+    target = xliffUnit.source;
   }
   const unit = document.createElement("tr");
   unit.classList.add("xliff-unit");
+
   const idTd = document.createElement("td");
   idTd.textContent = xliffUnit.id;
+
   const sourceTd = document.createElement("td");
   sourceTd.textContent = xliffUnit.source;
+
   const oldTargetTd = document.createElement("td");
   oldTargetTd.textContent = OldTarget;
+
   const targetTd = document.createElement("td");
-  targetTd.textContent = target;
+  // targetTd.textContent = target;
+  const targetInput = document.createElement("input");
+  targetInput.type = "text";
+  targetInput.className = "px-2 py-1 rounded border border-gray-300 w-full";
+  targetInput.value = target;
+  targetInput.setAttribute("data-id", xliffUnit.id);
+
+  if (!xliffUnit.translate) {
+    targetInput.disabled = true;
+    targetInput.className += " bg-gray-200 text-gray-500 cursor-not-allowed";
+    targetInput.title = "This unit is not translatable (translate=no)";
+  } else {
+    targetInput.addEventListener("input", (e) => {
+      const idx = mergedXliffUnits.findIndex((u) => u.id === xliffUnit.id);
+      if (idx !== -1) {
+        mergedXliffUnits[idx].target = (e.target as HTMLInputElement).value;
+      }
+    });
+  }
+  targetTd.appendChild(targetInput);
+
   const auxTd = document.createElement("td");
   unit.appendChild(idTd);
   unit.appendChild(sourceTd);
   unit.appendChild(oldTargetTd);
   unit.appendChild(targetTd);
-  unit.appendChild(auxTd);
+  // unit.appendChild(auxTd);
   mergedXliffUnits.push({
     id: xliffUnit.id,
     source: xliffUnit.source,
     target,
     notes: xliffUnit.notes,
+    translate: xliffUnit.translate,
   });
-  // unit.appendChild(create
+
   return unit;
 }

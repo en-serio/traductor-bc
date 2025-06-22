@@ -15,7 +15,7 @@ export async function checkTranslatorAPI() {
   const targetValue = target?.value || "en";
   console.log(targetValue);
   if (!("Translator" in window)) {
-    indicatorError("La API de traducción no está disponible.");
+    indicatorError("The translator API is not available in this browser.");
     return;
   }
   try {
@@ -27,7 +27,9 @@ export async function checkTranslatorAPI() {
     });
 
     if (translatorCapabilities === "unavailable") {
-      indicatorError("La API no está disponible para estos idiomas.");
+      indicatorError(
+        "The translator is not available for the selected languages."
+      );
       return;
     }
 
@@ -36,34 +38,32 @@ export async function checkTranslatorAPI() {
       targetLanguage: targetValue,
       monitor(m: any) {
         m.addEventListener("downloadprogress", (e: any) => {
-          const porcentaje = Math.round(e.loaded * 100);
-          console.log(`Descargando modelo... ${porcentaje}%`);
+          const percent = Math.round(e.loaded * 100);
+          console.log(`Downloading model ${percent}%`);
         });
       },
     });
-    indicatorAvailable("Traductor listo.");
+    indicatorAvailable("Translator reeady.");
   } catch (error) {
-    console.error("Error al cargar el traductor:", error);
-    indicatorError("No se pudo inicializar el traductor.");
+    console.error("Error loading translator:", error);
+    indicatorError("The translator could not be initialized.");
   }
 }
 
 export async function translateText(source: string): Promise<string> {
   if (!translator) {
-    indicatorError(
-      "Traductor no cargado. Por favor, carga el traductor primero."
-    );
+    indicatorError("Translator not loaded. Please load the translator first.");
     return "";
   }
   try {
     const resultado = await translator.translate(source);
     if (!resultado) {
-      throw new Error("No se pudo obtener la traducción.");
+      throw new Error("The translation could not be obtained.");
     }
     return resultado;
   } catch (err) {
-    console.error("Error al traducir:", err);
-    indicatorError("Error al traducir el texto.");
+    console.error("Error translatign:", err);
+    indicatorError("Error translating the text.");
     return "";
   }
 }
@@ -71,7 +71,7 @@ export async function translateText(source: string): Promise<string> {
 export function getTranslator() {
   if (!translator) {
     // throw new Error(
-    //   "Traductor no cargado. Por favor, carga el traductor primero."
+    //   "🥰"
     // );
     return null;
   }

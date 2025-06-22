@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <linearGradient gradientUnits="userSpaceOnUse" x1="174.019" y1="77.238" x2="174.019" y2="182.736" id="gradient-0" spreadMethod="pad">
+      <stop offset="0" style="stop-color: rgb(128, 231, 255);"/>
+      <stop offset="1" style="stop-color: rgb(255, 255, 255);"/>
+    </linearGradient>
+  </defs>
+  <path d="M 70.993 21.986 L 321.248 22.839 L 321.248 128.334 L 429.008 129.187 L 429.008 478.015 L 250.001 478.015 L 70.993 478.015 L 70.993 250.001 L 70.993 21.986 Z" style="paint-order: fill; stroke: rgb(255, 255, 255); fill: rgb(245, 245, 245);"/>
+  <path d="M 321.744 24.431 L 428.614 129.929 L 321.744 129.929 L 321.744 24.431 Z" bx:shape="triangle 321.744 24.431 106.87 105.498 0 0 1@f523b494" style="stroke: rgb(255, 255, 255); fill: rgb(167, 255, 131);"/>
+  <rect x="244.955" y="302.272" width="241.354" height="84.228" style="fill: rgb(167, 255, 131); stroke: rgb(255, 255, 255);" transform="matrix(1, 0, -0.001919, 1, -176.257751, -1.273093)"/>
+  <text style="font-family: Arial, sans-serif; font-size: 28px; white-space: pre;" x="189.483" y="308.603" transform="matrix(1.964636, 0, 0, 1.876864, -234.763565, -216.949539)">XLIFF</text>
+  <rect x="126.817" y="77.238" width="94.403" height="105.498" style="fill-rule: evenodd; paint-order: fill; stroke-width: 1; stroke: rgb(255, 255, 255); fill: url(&quot;#gradient-0&quot;);"/>
+  <text style="fill: rgb(216, 39, 39); font-family: Arial, sans-serif; font-size: 28px; white-space: pre;" x="211.511" y="232.094" transform="matrix(1.964636, 0, 0, 1.876864, -266.495209, -267.720154)">🌐</text>
+  <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 28px;" x="198.777" y="194.595" transform="matrix(2.154991, 0, 0, 1.401314, -294.328369, -152.314285)">A</text>
+</svg>

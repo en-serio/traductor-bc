@@ -4,6 +4,7 @@ export interface XliffUnit {
   notes: any[];
   target?: string;
   oldTarget?: string;
+  translate: boolean;
 }
 
 export interface XliffOptions {

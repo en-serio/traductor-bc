@@ -14,33 +14,34 @@ let keepOldTarget: boolean = false;
 let mergedXliffUnits: XliffUnit[] = [];
 
 export function registerEvents() {
-  document.getElementById("cargar-traductor")?.addEventListener("click", () => {
+  document.getElementById("load-translator")?.addEventListener("click", () => {
     checkTranslatorAPI();
   });
 
-  document.getElementById("traducir")!.addEventListener("click", async () => {
+  document.getElementById("translate")!.addEventListener("click", async () => {
     checkTranslatorAPI();
 
     const input = document.getElementById("source-text") as HTMLInputElement;
     const sourceText = input?.value || "";
     console.log(sourceText);
     if (!sourceText) {
-      console.warn("No hay texto para traducir.");
+      // TODO english
+      console.warn("There is no text to translate.");
       return;
     }
     try {
       const resultado = await translateText(sourceText);
       document.getElementById("target-text")!.textContent = resultado;
     } catch (err) {
-      console.error("Error al traducir:", err);
-      indicatorError("Error al traducir el texto.");
+      // TODO english
+      console.error("Translation error:", err);
+      indicatorError("An error occurred while translating the text.");
     }
   });
 
   document.querySelectorAll('input[name="type-input"]').forEach((input) =>
     input.addEventListener("change", (event) => {
       const selected = (event.target as HTMLInputElement).value;
-      console.log("Texto seleccionado");
       document
         .querySelector("#source-text-container")
         ?.classList.toggle("hidden", selected !== "text");
@@ -53,15 +54,14 @@ export function registerEvents() {
     })
   );
 
-  document.querySelectorAll('input[name="trad-action"]').forEach((input) =>
+  document.querySelectorAll('input[name="translate-action"]').forEach((input) =>
     input.addEventListener("change", (event) => {
-      console.log("Acción de traducción seleccionada");
       keepOldTarget = (event.target as HTMLInputElement).value === "YES";
     })
   );
 
   document
-    .getElementById("traducir-archivo")
+    .getElementById("translate-file")
     ?.addEventListener("click", async () => {
       const fileInput = document.getElementById(
         "source-file"
@@ -74,12 +74,12 @@ export function registerEvents() {
       const targetFile = targetFileInput?.files?.[0];
 
       if (!file) {
-        indicatorError("Selecciona un archivo XLIFF antes de traducir.");
+        indicatorError("Select an XLIFF file before translating.");
         return;
       }
 
       if (!file.name.endsWith(".xliff") && !file.name.endsWith(".xlf")) {
-        indicatorError("El archivo no es un XLIFF válido (.xliff o .xlf).");
+        indicatorError("The file is not a valid XLIFF (.xliff or .xlf)");
         return;
       }
 
@@ -95,17 +95,16 @@ export function registerEvents() {
           mergedXliffUnits = await insertXliffUnit(parsed, keepOldTarget);
         }
       } catch (err) {
-        console.error("Error al leer el archivo.", err);
-        alert("No se pudo leer el archivo.");
+        console.error("Error reading the file", err);
+        alert("The file could not be read.");
       }
     });
 
-  document
-    .getElementById("descargar-archivo")
-    ?.addEventListener("click", () => {
-      const elXlidf = jsonToXliff(mergedXliffUnits);
-      autoDownloadXliff(elXlidf, "traduccion.xlf");
-    });
+  document.getElementById("download-file")?.addEventListener("click", () => {
+    const xliffParsed = jsonToXliff(mergedXliffUnits);
+    //Todo rename the output file
+    autoDownloadXliff(xliffParsed, "translated.xlf");
+  });
 
   document.getElementById("swap-languages")?.addEventListener("click", () => {
     const sourceSelect = document.getElementById(

@@ -2,26 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/xliffTranslator.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Traductor Archivos</title>
+    <title>File Translator</title>
   </head>
   <body
     class="m-2 bg-gradient-to-tr from-blue-50 to-purple-100 min-h-screen flex items-center justify-center"
   >
     <div
       id="app"
-      class="w-full max-w-3xl mx-auto p-6 bg-white shadow-2xl rounded-3xl flex flex-col gap-8"
+      class="w-3/4 mx-auto p-6 bg-white shadow-2xl rounded-3xl flex flex-col gap-8"
     >
-      <!-- Header -->
       <header class="text-center">
         <h1 class="text-5xl font-bold mb-2 tracking-tight text-blue-700">
-          Traductor XLIFF
+          XLIFF Translator
         </h1>
-        <p class="text-gray-500">Convierte archivos o texto con facilidad</p>
+        <p class="text-gray-500">Translate texts and Files effortlessly</p>
       </header>
 
-      <!-- Status -->
       <div
         class="flex items-center gap-4 px-4 py-3 rounded-xl bg-gray-50 border border-gray-200"
       >
@@ -35,7 +33,6 @@
         ></span>
       </div>
 
-      <!-- Language Selectors -->
       <section
         class="flex flex-col md:flex-row gap-4 items-center justify-between bg-gray-50 p-4 rounded-xl shadow"
       >
@@ -67,15 +64,14 @@
         </button>
         <div class="flex flex-col items-center w-full md:w-auto gap-2">
           <button
-            id="cargar-traductor"
+            id="load-translator"
             class="w-full md:w-auto px-6 py-2 rounded-xl bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition"
           >
-            Cargar Traductor
+            Load Translator
           </button>
         </div>
       </section>
 
-      <!-- Type Input -->
       <section>
         <div class="flex gap-4 justify-center">
           <label class="inline-flex items-center gap-1">
@@ -104,22 +100,21 @@
               value="json"
               class="accent-blue-600"
             />
-            <span>JSON File i18n</span>
+            <span>JSON File</span>
           </label>
         </div>
       </section>
 
-      <!-- Source Text -->
       <section
         id="source-text-container"
         class="bg-gray-50 p-4 rounded-xl shadow flex flex-col gap-4"
       >
         <div class="flex gap-4 items-center">
           <button
-            id="traducir"
+            id="translate"
             class="px-6 py-2 rounded-xl bg-green-600 text-white font-semibold shadow hover:bg-green-700 transition"
           >
-            Traducir
+            Translate
           </button>
           <input
             type="text"
@@ -134,28 +129,27 @@
         ></span>
       </section>
 
-      <!-- XLIFF Input (hidden by default, remove 'hidden' to show) -->
       <section
         id="source-input-container"
         class="bg-gray-50 p-4 rounded-xl shadow flex-col gap-4 hidden source-input-container"
       >
         <div class="flex flex-col gap-4 items-center">
           <label for="source-file" class="font-medium text-gray-600"
-            >Archivo fuente (XLIFF):</label
+            >Source File (XLIFF):</label
           >
           <input
             type="file"
             id="source-file"
-            accept=".xlf"
+            accept=".xlf,.xliff,.xml"
             class="block rounded border border-gray-300 px-3 py-1"
           />
           <label for="target-file" class="font-medium text-gray-600"
-            >Archivo destino (opcional):</label
+            >Target File (optional):</label
           >
           <input
             type="file"
             id="target-file"
-            accept=".xlf"
+            accept=".xlf,.xliff,.xml"
             class="block rounded border border-gray-300 px-3 py-1"
           />
         </div>
@@ -163,35 +157,35 @@
           <label class="inline-flex items-center gap-1">
             <input
               type="radio"
-              name="trad-action"
+              name="translate-action"
               value="YES"
               class="accent-blue-600"
             />
-            <span>keep the old target</span>
+            <span>Keep the old target</span>
           </label>
           <label class="inline-flex items-center gap-1">
             <input
               type="radio"
-              name="trad-action"
+              name="translate-action"
               value="NO"
               checked
               class="accent-blue-600"
             />
-            <span>create new target</span>
+            <span>Create new target</span>
           </label>
         </div>
         <button
-          id="traducir-archivo"
+          id="translate-file"
           class="mt-4 px-6 py-2 rounded-xl bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition"
         >
-          Traducir archivo
+          Translate file
         </button>
 
         <button
-          id="descargar-archivo"
+          id="download-file"
           class="mt-4 px-6 py-2 rounded-xl bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition"
         >
-          Descargar archivo
+          Download File
         </button>
 
         <div class="overflow-x-auto mt-4">
@@ -207,17 +201,14 @@
                   Old Target Text
                 </th>
                 <th class="px-3 py-2 font-semibold text-left">Target Text</th>
-                <th class="px-3 py-2 font-semibold text-left">Aux</th>
+                <!-- <th class="px-3 py-2 font-semibold text-left">Aux</th> -->
               </tr>
             </thead>
-            <tbody id="xliff-units-body">
-              <!-- Aquí las filas de datos -->
-            </tbody>
+            <tbody id="xliff-units-body"></tbody>
           </table>
         </div>
       </section>
 
-      <!-- JSON Input (hidden by default, remove 'hidden' to show) -->
       <section
         id="source-json-container"
         class="bg-gray-50 p-4 rounded-xl shadow flex-col gap-4 hidden source-json-container"
@@ -229,7 +220,7 @@
           <input
             type="file"
             id="source-file-JSON"
-            accept=".xlf"
+            accept=".json"
             class="block rounded border border-gray-300 px-3 py-1"
           />
           <label for="target-file-JSON" class="font-medium text-gray-600"
@@ -238,7 +229,7 @@
           <input
             type="file"
             id="target-file-JSON"
-            accept=".xlf"
+            accept=".json"
             class="block rounded border border-gray-300 px-3 py-1"
           />
         </div>
@@ -246,28 +237,28 @@
           <label class="inline-flex items-center gap-1">
             <input
               type="radio"
-              name="trad-action"
+              name="translate-action-json"
               value="YES"
               class="accent-blue-600"
             />
-            <span>keep the old target</span>
+            <span>Keep the old target</span>
           </label>
           <label class="inline-flex items-center gap-1">
             <input
               type="radio"
-              name="trad-action"
+              name="translate-action-json"
               value="NO"
               checked
               class="accent-blue-600"
             />
-            <span>create new target</span>
+            <span>Create new target</span>
           </label>
         </div>
         <button
-          id="traducir-archivo-JSON"
+          id="translate-file-JSON"
           class="mt-4 px-6 py-2 rounded-xl bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition"
         >
-          Traducir archivo
+          Translate File
         </button>
 
         <div class="overflow-x-auto mt-4">
@@ -283,12 +274,10 @@
                   Old Target Text
                 </th>
                 <th class="px-3 py-2 font-semibold text-left">Target Text</th>
-                <th class="px-3 py-2 font-semibold text-left">Aux</th>
+                <!-- <th class="px-3 py-2 font-semibold text-left">Aux</th> -->
               </tr>
             </thead>
-            <tbody id="json-units-body">
-              <!-- Aquí las filas de datos -->
-            </tbody>
+            <tbody id="json-units-body"></tbody>
           </table>
         </div>
       </section>
